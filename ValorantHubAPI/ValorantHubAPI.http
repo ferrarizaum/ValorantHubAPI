@@ -1,0 +1,6 @@
+@ValorantHubAPI_HostAddress = http://localhost:5062
+
+GET {{ValorantHubAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
