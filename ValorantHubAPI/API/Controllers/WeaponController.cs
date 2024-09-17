@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ValorantHubAPI.API.Services;
 
 namespace ValorantHubAPI.API.Controllers
 {
@@ -6,9 +7,17 @@ namespace ValorantHubAPI.API.Controllers
     [ApiController]
     public class WeaponController : ControllerBase
     {
+        private readonly IWeaponService _weaponService;
+
+        public WeaponController(IWeaponService weaponService)
+        {
+            _weaponService = weaponService;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
+           _weaponService.GetWeapons(); 
             return Ok();
         }
 
