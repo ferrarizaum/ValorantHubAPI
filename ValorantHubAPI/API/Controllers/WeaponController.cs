@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ValorantHubAPI.API.Services;
+using ValorantHubAPI.Data.Entities;
 
 namespace ValorantHubAPI.API.Controllers
 {
@@ -17,20 +18,22 @@ namespace ValorantHubAPI.API.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-           _weaponService.GetWeapons(); 
-            return Ok();
+            var weapons = _weaponService.GetWeapons(); 
+            return Ok(weapons);
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromBody] WeaponEntity weapon)
         {
-            return Ok();
+            var newWeapon =_weaponService.PostWeapon(weapon);
+            return Ok(newWeapon);
         }
 
         [HttpPut]
-        public IActionResult Put()
+        public IActionResult Put([FromBody] WeaponEntity weapon, string displayName)
         {
-            return Ok();
+            var updatedWeapon = _weaponService.UpdateWeapon(weapon, displayName);
+            return Ok(updatedWeapon);
         }
 
         [HttpDelete]

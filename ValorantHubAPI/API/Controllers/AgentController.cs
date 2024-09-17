@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ValorantHubAPI.API.Services;
+using ValorantHubAPI.Data.Entities;
 
 namespace ValorantHubAPI.API.Controllers
 {
@@ -17,21 +18,22 @@ namespace ValorantHubAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            Console.WriteLine("Inside Agent Controller");
-            _agentService.GetAgents();
-            return Ok();
+            var agents = _agentService.GetAgents();
+            return Ok(agents);
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public IActionResult Post([FromBody] AgentEntity agent)
         {
-            return Ok();
+            var newAgent = _agentService.PostAgent(agent);
+            return Ok(newAgent);
         }
 
         [HttpPut]
-        public IActionResult Put()
+        public IActionResult Put([FromBody] AgentEntity agent, string displayName)
         {
-            return Ok();
+            var updatedAgent = _agentService.UpdateAgent(agent, displayName);
+            return Ok(updatedAgent);
         }
 
         [HttpDelete]
