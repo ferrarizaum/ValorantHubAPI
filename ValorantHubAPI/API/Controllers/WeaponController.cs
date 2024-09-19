@@ -37,9 +37,10 @@ namespace ValorantHubAPI.API.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete()
+        public IActionResult Delete(string displayName)
         {
-            return Ok();
+            var removedWeapon = _weaponService.RemoveWeapon(displayName);
+            return Ok(removedWeapon);
         }
     }
 }

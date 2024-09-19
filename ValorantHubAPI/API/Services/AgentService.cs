@@ -8,6 +8,7 @@ namespace ValorantHubAPI.API.Services
        ICollection<AgentEntity> GetAgents();
        AgentEntity PostAgent(AgentEntity agent);
        AgentEntity UpdateAgent(AgentEntity agent, string displayName);
+       AgentEntity RemoveAgent(string displayName);
     }
     public class AgentService:IAgentService
     {
@@ -42,6 +43,14 @@ namespace ValorantHubAPI.API.Services
             oldAgent.description = agent.description;
 
             return oldAgent;
+        }
+
+        public AgentEntity RemoveAgent(string displayName)
+        {
+            var removedAgent = _appDbContext.Agents.Find(a => a.displayName == displayName);
+            _appDbContext?.Agents.Remove(removedAgent);
+
+            return removedAgent;
         }
     }
 }

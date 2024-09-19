@@ -8,7 +8,7 @@ namespace ValorantHubAPI.API.Services
         ICollection<WeaponEntity> GetWeapons();
         WeaponEntity PostWeapon(WeaponEntity weapon);
         WeaponEntity UpdateWeapon(WeaponEntity weapon, string displayName);
-
+        WeaponEntity RemoveWeapon(string displayName);
     }
     public class WeaponService:IWeaponService
     {
@@ -32,7 +32,7 @@ namespace ValorantHubAPI.API.Services
 
         public WeaponEntity UpdateWeapon(WeaponEntity weapon, string displayName)
         {
-            var oldWeapon = _appDbContext.Weapons.Find(a => a.displayName == displayName);
+            var oldWeapon = _appDbContext.Weapons.Find(w => w.displayName == displayName);
 
             if (oldWeapon == null)
             {
@@ -43,6 +43,14 @@ namespace ValorantHubAPI.API.Services
             oldWeapon.description = weapon.description;
 
             return oldWeapon;
+        }
+
+        public WeaponEntity RemoveWeapon(string displayName)
+        {
+            var removedWeapon = _appDbContext.Weapons.Find(w => w.displayName == displayName);
+            _appDbContext?.Weapons.Remove(removedWeapon);
+
+            return removedWeapon;
         }
     }
 }

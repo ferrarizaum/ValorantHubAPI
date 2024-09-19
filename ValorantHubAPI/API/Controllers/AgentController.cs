@@ -37,9 +37,10 @@ namespace ValorantHubAPI.API.Controllers
         }
 
         [HttpDelete]
-        public IActionResult Delete()
+        public IActionResult Delete(string displayName)
         {
-            return Ok();
+            var removedAgent = _agentService.RemoveAgent(displayName);
+            return Ok(removedAgent);
         }
     }
 }
