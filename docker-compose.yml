@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  valoranthubapidb:
+    image: mysql:latest
+  valoranthubapi:  
+    image: ${DOCKER_REGISTRY-}valoranthubapi
+    build:
+      context: .
+      dockerfile: ValorantHubAPI/Dockerfile
+
+volumes:
+  mysql-data:

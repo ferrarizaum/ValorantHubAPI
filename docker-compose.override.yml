@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  valoranthubapidb:
+    container_name: valoranthubdb
+    environment:
+        MYSQL_ROOT_PASSWORD: password
+        MYSQL_DATABASE: valorant_hub
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+  valoranthubapi:
+    container_name: valoranthubapi
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=valorant_hub;User=root;Password=password;
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "valoranthubapidb"

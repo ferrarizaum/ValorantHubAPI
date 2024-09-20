@@ -1,26 +1,27 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using ValorantHubAPI.Data.Entities;
 
 namespace ValorantHubAPI.Data.Context
 {
-    public interface IAppDbContext
+    public class AppDbContext: DbContext
     {
-        List<WeaponEntity> Weapons { get; }
-        List<AgentEntity> Agents { get; }
-    }
-   
-    public class AppDbContext: IAppDbContext
-    {
-        [NotMapped]
-        public List<WeaponEntity> Weapons { get; private set; } = new List<WeaponEntity>();
-        [NotMapped]
-        public List<AgentEntity> Agents { get; private set; } = new List<AgentEntity>();
-
-        public AppDbContext()
+        private readonly IConfiguration _configuration;
+        public AppDbContext(IConfiguration configuration)
         {
-            Weapons = new List<WeaponEntity>();
-            Agents = new List<AgentEntity>();
+            _configuration = configuration;
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            string connectionString = _configuration.GetConnectionString("DefaultConnection");
+
+            optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+        }
+
+
+        public DbSet<AgentEntity> Agents { get; set; }
+        public DbSet<WeaponEntity> Weapons { get; set; }
 
     }
 }

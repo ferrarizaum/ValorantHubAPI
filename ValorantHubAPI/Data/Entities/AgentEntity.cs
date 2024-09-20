@@ -4,6 +4,8 @@ namespace ValorantHubAPI.Data.Entities
 {
     public class AgentEntity
     {
+        [Key]
+        public int Id { get; set; }
         [Required]
         [MaxLength(15)]
         public string displayName { get; set; } = string.Empty;
