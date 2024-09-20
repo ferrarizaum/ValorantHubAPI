@@ -1,4 +1,5 @@
-﻿using ValorantHubAPI.Data.Entities;
+﻿using ValorantHubAPI.Data.Context;
+using ValorantHubAPI.Data.Entities;
 using ValorantHubAPI.Data.Store;
 
 namespace ValorantHubAPI.API.Services
@@ -13,20 +14,24 @@ namespace ValorantHubAPI.API.Services
     public class AgentService:IAgentService
     {
         private readonly IAppStore _appDbContext;
-        public AgentService(IAppStore appDbContext)
+        private readonly AppDbContext _dbContext;
+        public AgentService(IAppStore appDbContext, 
+                            AppDbContext appDbContext2)
         {
             _appDbContext = appDbContext;
+            _dbContext = appDbContext2;
         }
 
         public ICollection<AgentEntity> GetAgents()
         {
-            var agents = _appDbContext.Agents.ToList();
+            var agents = _dbContext.Agents.ToList();
             return agents;
         }
 
         public AgentEntity PostAgent(AgentEntity agent)
         {
-            _appDbContext.Agents.Add(agent);
+            _dbContext.Agents.Add(agent);
+            _dbContext.SaveChanges();
             return agent;
         }
 

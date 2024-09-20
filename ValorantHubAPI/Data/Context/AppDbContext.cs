@@ -15,7 +15,7 @@ namespace ValorantHubAPI.Data.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
-
+            Console.WriteLine(connectionString);
             optionsBuilder.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
         }
 

@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 //builder.Services.AddSingleton<IAppDbContext, AppDbContext>();
 builder.Services.AddSingleton<IAppStore, AppStore>();
+builder.Services.AddSingleton<AppDbContext, AppDbContext>();
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
 
