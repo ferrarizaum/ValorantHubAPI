@@ -1,4 +1,5 @@
-﻿using ValorantHubAPI.Data.Entities;
+﻿using ValorantHubAPI.Data.Context;
+using ValorantHubAPI.Data.Entities;
 using ValorantHubAPI.Data.Store;
 
 namespace ValorantHubAPI.API.Services
@@ -13,26 +14,30 @@ namespace ValorantHubAPI.API.Services
     public class WeaponService:IWeaponService
     {
         private readonly IAppStore _appDbContext;
-        public WeaponService(IAppStore appDbContext)
+        private readonly AppDbContext _dbContext;
+        public WeaponService(IAppStore appDbContext,
+                             AppDbContext dbContext)
         {
             _appDbContext = appDbContext;
+            _dbContext = dbContext;
         }
 
         public ICollection<WeaponEntity> GetWeapons()
         {
-            var weapons = _appDbContext.Weapons.ToList();
+            var weapons = _dbContext.Weapons.ToList();
             return weapons;
         }
 
         public WeaponEntity PostWeapon(WeaponEntity weapon)
         {
-            _appDbContext.Weapons.Add(weapon);
+            _dbContext.Weapons.Add(weapon);
+            _dbContext.SaveChanges();
             return weapon;
         }
 
         public WeaponEntity UpdateWeapon(WeaponEntity weapon, string displayName)
         {
-            var oldWeapon = _appDbContext.Weapons.Find(w => w.displayName == displayName);
+            var oldWeapon = _dbContext.Weapons.FirstOrDefault(w => w.displayName == displayName);
 
             if (oldWeapon == null)
             {
@@ -41,14 +46,22 @@ namespace ValorantHubAPI.API.Services
 
             oldWeapon.displayName = weapon.displayName;
             oldWeapon.description = weapon.description;
+            _dbContext.SaveChanges();
 
             return oldWeapon;
         }
 
         public WeaponEntity RemoveWeapon(string displayName)
         {
-            var removedWeapon = _appDbContext.Weapons.Find(w => w.displayName == displayName);
-            _appDbContext?.Weapons.Remove(removedWeapon);
+            var removedWeapon = _dbContext.Weapons.FirstOrDefault(w => w.displayName == displayName);
+
+            if (removedWeapon == null)
+            {
+                return null;
+            }
+
+            _dbContext.Weapons.Remove(removedWeapon);
+            _dbContext.SaveChanges();
 
             return removedWeapon;
         }

@@ -37,7 +37,7 @@ namespace ValorantHubAPI.API.Services
 
         public AgentEntity UpdateAgent(AgentEntity agent, string displayName)
         {
-            var oldAgent = _appDbContext.Agents.Find(a => a.displayName == displayName);
+            var oldAgent = _dbContext.Agents.FirstOrDefault(a => a.displayName == displayName);
 
             if(oldAgent == null)
             {
@@ -46,14 +46,21 @@ namespace ValorantHubAPI.API.Services
 
             oldAgent.displayName = agent.displayName;
             oldAgent.description = agent.description;
-
+            _dbContext.SaveChanges();
             return oldAgent;
         }
 
         public AgentEntity RemoveAgent(string displayName)
         {
-            var removedAgent = _appDbContext.Agents.Find(a => a.displayName == displayName);
-            _appDbContext?.Agents.Remove(removedAgent);
+            var removedAgent = _dbContext.Agents.FirstOrDefault(a => a.displayName == displayName);
+
+            if (removedAgent == null)
+            {
+                return null;
+            }
+
+            _dbContext.Agents.Remove(removedAgent);
+            _dbContext.SaveChanges();
 
             return removedAgent;
         }
