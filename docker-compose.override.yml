@@ -15,7 +15,7 @@ services:
     container_name: valoranthubapi
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=db;Port=3306;Database=valorant_hub;User=root;Password=password;
+      - ConnectionStrings__DefaultConnection=Server=valoranthubapidb;Port=3306;Database=valorant_hub;User=root;Password=password;
     ports:
       - "8080:8080"
     depends_on:
