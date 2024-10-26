@@ -13,8 +13,8 @@ jobs:
       - name: Building Docker Image
         uses: docker/build-push-action@v6.9.0
         with:
-          context: ./ValorantHubAPI/ValorantHubAPI.csproj
-          file: ./ValorantHubAPI/Dockerfile
+          context: ./ValorantHubAPI.csproj
+          file: ./Dockerfile
           push: true
           tags: |
             joseferrari/ferrari-repo:v1
