@@ -11,7 +11,7 @@ WORKDIR /src
 COPY ["./ValorantHubAPI.csproj", "ValorantHubAPI/"]
 RUN dotnet restore "./ValorantHubAPI/ValorantHubAPI.csproj"
 COPY . .
-WORKDIR "/src/ValorantHubAPI"
+WORKDIR "/ValorantHubAPI"
 RUN dotnet build "./ValorantHubAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
