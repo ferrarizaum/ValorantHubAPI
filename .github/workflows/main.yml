@@ -13,7 +13,7 @@ jobs:
       - name: Building Docker Image
         uses: docker/build-push-action@v6.9.0
         with:
-          context: ./ValorantHubAPI
+          context: ./ValorantHubAPI/ValorantHubAPI.csproj
           file: ./ValorantHubAPI/Dockerfile
           push: true
           tags: |
