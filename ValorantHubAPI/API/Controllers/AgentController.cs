@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ValorantHubAPI.API.Services;
 using ValorantHubAPI.Data.Entities;
-
+//teste
 namespace ValorantHubAPI.API.Controllers
 {
     [Route("api/[controller]")]
