@@ -1,0 +1,21 @@
+name: CI-CD
+
+on:
+  push:
+    branches: ["main"]
+    
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4.2.2
+      - name: Building Docker Image
+        uses: docker/build-push-action@v6.9.0
+        with:
+          context: ./ValorantHubAPI
+          file: ./ValorantHubAPI/Dockerfile
+          push: true
+          tags: |
+            joseferrari/ferrari-repo:v1
+            joseferrari/ferrari-repo:latest
