@@ -14,7 +14,7 @@ jobs:
         uses: docker/build-push-action@v6.9.0
         with:
           context: ./ValorantHubAPI
-          file: ./Dockerfile
+          file: ./ValorantHubAPI/Dockerfile
           push: true
           tags: |
             joseferrari/ferrari-repo:v1
