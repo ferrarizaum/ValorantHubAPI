@@ -8,7 +8,7 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ValorantHubAPI/ValorantHubAPI/ValorantHubAPI.csproj", "ValorantHubAPI/"]
+COPY ["./ValorantHubAPI/ValorantHubAPI.csproj", "ValorantHubAPI/"]
 RUN dotnet restore "./ValorantHubAPI/ValorantHubAPI.csproj"
 COPY . .
 WORKDIR "/src/ValorantHubAPI"
