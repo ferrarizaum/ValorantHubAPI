@@ -9,7 +9,7 @@ namespace ValorantHubAPI.API.Controllers
     public class AgentController : ControllerBase
     {
         private readonly IAgentService _agentService;
-
+        //teste
         public AgentController(IAgentService agentService)
         {
             _agentService = agentService;
