@@ -22,5 +22,5 @@ jobs:
           file: ./ValorantHubAPI/Dockerfile
           push: true
           tags: |
-            joseferrari/ferrari-repo:v1
+            joseferrari/ferrari-repo:${{github.run_number}}
             joseferrari/ferrari-repo:latest
