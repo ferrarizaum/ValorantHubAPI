@@ -24,3 +24,10 @@ jobs:
           tags: |
             joseferrari/ferrari-repo:${{github.run_number}}
             joseferrari/ferrari-repo:latest
+  CD:
+    runs-on: ubuntu-latest
+    needs: [CI]
+
+    steps: 
+      - name: Deploying to cloud
+        run: echo "Deploying to cloud..."
