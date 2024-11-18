@@ -37,6 +37,8 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
+
 app.MapControllers();
 
 app.Run();
