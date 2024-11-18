@@ -19,6 +19,16 @@ builder.Services.AddSingleton<IAppStore, AppStore>();  // Singleton is fine for 
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
