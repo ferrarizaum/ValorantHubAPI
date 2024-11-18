@@ -1,28 +1,27 @@
+using Microsoft.EntityFrameworkCore;
 using ValorantHubAPI.API.Services;
 using ValorantHubAPI.Data.Context;
 using ValorantHubAPI.Data.Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+// Configure DbContext as a scoped service (don't use Singleton)
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Add other services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-//builder.Services.AddSingleton<IAppDbContext, AppDbContext>();
-builder.Services.AddSingleton<IAppStore, AppStore>();
-builder.Services.AddSingleton<AppDbContext, AppDbContext>();
+
+// Register services with correct lifetimes
+builder.Services.AddSingleton<IAppStore, AppStore>();  // Singleton is fine for a store
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-/*
-if (app.Environment.IsDevelopment())
-{
-}
-*/
 app.UseSwagger();
 app.UseSwaggerUI();
 
