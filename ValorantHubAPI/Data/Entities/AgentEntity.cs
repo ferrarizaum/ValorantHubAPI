@@ -11,5 +11,6 @@ namespace ValorantHubAPI.Data.Entities
         public string displayName { get; set; } = string.Empty;
         [MaxLength(250)]
         public string description { get; set; } = string.Empty;
+        public string imageUrl { get; set; } = string.Empty;
     }
 }
