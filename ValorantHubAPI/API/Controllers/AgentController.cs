@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ValorantHubAPI.API.Services;
 using ValorantHubAPI.Data.Entities;
-//teste
+
 namespace ValorantHubAPI.API.Controllers
 {
     [Route("api/[controller]")]
@@ -9,7 +9,6 @@ namespace ValorantHubAPI.API.Controllers
     public class AgentController : ControllerBase
     {
         private readonly IAgentService _agentService;
-
         public AgentController(IAgentService agentService)
         {
             _agentService = agentService;

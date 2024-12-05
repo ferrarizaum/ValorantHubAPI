@@ -45,7 +45,7 @@ namespace ValorantHubAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Agents");
+                    b.ToTable("Agents", (string)null);
                 });
 
             modelBuilder.Entity("ValorantHubAPI.Data.Entities.WeaponEntity", b =>
@@ -72,7 +72,7 @@ namespace ValorantHubAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Weapons");
+                    b.ToTable("Weapons", (string)null);
                 });
 #pragma warning restore 612, 618
         }
