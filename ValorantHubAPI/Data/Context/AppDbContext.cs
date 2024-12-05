@@ -12,6 +12,7 @@ namespace ValorantHubAPI.Data.Context
 
         public DbSet<AgentEntity> Agents { get; set; }
         public DbSet<WeaponEntity> Weapons { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
     }
 }
