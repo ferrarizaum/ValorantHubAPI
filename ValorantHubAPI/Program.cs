@@ -8,16 +8,13 @@ using ValorantHubAPI.Data.Store;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configure DbContext as a scoped service (don't use Singleton)
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Add other services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Register services with correct lifetimes
 builder.Services.AddSingleton<IAppStore, AppStore>();  // Singleton is fine for a store
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
@@ -38,27 +35,40 @@ builder.Services.AddCors(options =>
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
+        options.UseSecurityTokenValidators = true;
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuer = true,
-            ValidateAudience = true,
-            ValidateLifetime = true,
-            ValidateIssuerSigningKey = true,
-            ValidIssuer = "your-issuer",
-            ValidAudience = "your-audience",
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key"))
+            ValidateLifetime = true, 
+            ValidateIssuerSigningKey = true, 
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-very-secure-secret-key-of-at-least-32-characters-long")),
+            ValidateIssuer = false, 
+            ValidateAudience = false, 
+        };
+
+        options.Events = new JwtBearerEvents
+        {
+        OnAuthenticationFailed = context =>
+            {
+                var error = context.Exception.Message;
+                Console.WriteLine($"Token invalid: {error}");
+                return Task.CompletedTask;
+            }
         };
     });
 
+builder.Services.AddAuthorization();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 app.UseSwagger();
 app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
