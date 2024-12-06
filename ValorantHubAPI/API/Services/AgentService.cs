@@ -13,7 +13,7 @@ namespace ValorantHubAPI.API.Services
     }
     public class AgentService:IAgentService
     {
-        private readonly IAppStore _appDbContext;
+        private readonly IAppStore _appDbContext;//remove not beign used, was used for testing
         private readonly AppDbContext _dbContext;
         public AgentService(IAppStore appDbContext, 
                             AppDbContext appDbContext2)

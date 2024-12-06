@@ -27,5 +27,14 @@ namespace ValorantHubAPI.API.Controllers
             var newUser = _userService.PostUser(user);
             return Ok(newUser);
         }
+
+        //add put route
+
+        [HttpDelete]
+        public IActionResult Delete(string userName)
+        {
+            var removedUser = _userService.RemoveUser(userName);
+            return Ok(removedUser);
+        }
     }
 }

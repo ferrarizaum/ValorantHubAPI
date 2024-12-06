@@ -1,4 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using ValorantHubAPI.API.Services;
 using ValorantHubAPI.Data.Context;
 using ValorantHubAPI.Data.Store;
@@ -18,6 +21,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IAppStore, AppStore>();  // Singleton is fine for a store
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IWeaponService, WeaponService>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 
 builder.Services.AddCors(options =>
 {
@@ -28,6 +34,21 @@ builder.Services.AddCors(options =>
                .AllowAnyHeader();
     });
 });
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = "your-issuer",
+            ValidAudience = "your-audience",
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("your-secret-key"))
+        };
+    });
 
 var app = builder.Build();
 

@@ -14,7 +14,7 @@ namespace ValorantHubAPI.API.Services
     }
     public class UserService : IUserService
     {
-        private readonly IAppStore _appDbContext;
+        private readonly IAppStore _appDbContext;//remove not beign used, was used for testing
         private readonly AppDbContext _dbContext;
         public UserService(IAppStore appDbContext,
                             AppDbContext appDbContext2)
@@ -25,27 +25,37 @@ namespace ValorantHubAPI.API.Services
 
         public ICollection<UserEntity> GetUsers()
         {
-            //var users = _dbContext.Users.ToList();
-            //return users;
-            throw new NotImplementedException();
+            var users = _dbContext.Users.ToList();
+            return users;
         }
 
         public UserEntity PostUser(UserEntity user)
         {
-            //_dbContext.Users.Add(user);
-            //_dbContext.SaveChanges();
-            //return user;
-            throw new NotImplementedException();
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
+            return user;
         }
 
-        public UserEntity RemoveUser(string displayName)
+        public UserEntity RemoveUser(string userName)
         {
-            throw new NotImplementedException();
+            var removedUser = _dbContext.Users.FirstOrDefault(a => a.userName == userName);
+
+            if (removedUser == null)
+            {
+                return null;
+            }
+
+            _dbContext.Users.Remove(removedUser);
+            _dbContext.SaveChanges();
+
+            return removedUser;
         }
 
         public UserEntity UpdateUser(UserEntity user, string displayName)
         {
             throw new NotImplementedException();
         }
+
+
     }
 }
