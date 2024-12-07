@@ -4,12 +4,13 @@ using System.Security.Claims;
 using System.Text;
 using ValorantHubAPI.Data.Context;
 using ValorantHubAPI.Data.Entities;
+using static ValorantHubAPI.API.Services.AuthService;
 
 namespace ValorantHubAPI.API.Services
 {
     public interface IAuthService
     {
-        string Login(UserEntity model);
+        LoginResponse Login(UserEntity model);
         string GenerateJwtToken(UserEntity user);
     }
 
@@ -25,7 +26,7 @@ namespace ValorantHubAPI.API.Services
             _configuration = configuration;
         }
 
-        public string Login(UserEntity model)
+        public LoginResponse Login(UserEntity model)
         {
             var user = _context.Users.FirstOrDefault(u => u.userName == model.userName && u.password == model.password);
 
@@ -35,7 +36,12 @@ namespace ValorantHubAPI.API.Services
             }
 
             var token = GenerateJwtToken(user);
-            return token;
+
+            return new LoginResponse
+            {
+                token = token,
+                userName = user.userName
+            };
         }
 
         public string GenerateJwtToken(UserEntity user)
@@ -56,6 +62,12 @@ namespace ValorantHubAPI.API.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public class LoginResponse
+        {
+            public string token { get; set; }
+            public string userName { get; set; }
         }
     }
 }

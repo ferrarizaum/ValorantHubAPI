@@ -5,6 +5,7 @@ using ValorantHubAPI.Data.Entities;
 
 namespace ValorantHubAPI.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : Controller
@@ -15,7 +16,6 @@ namespace ValorantHubAPI.API.Controllers
             _userService = userService;
         }
 
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> Get()
         {
