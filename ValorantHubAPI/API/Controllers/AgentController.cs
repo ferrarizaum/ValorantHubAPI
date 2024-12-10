@@ -6,7 +6,7 @@ using ValorantHubAPI.Data.Entities;
 namespace ValorantHubAPI.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     [ApiController]
     public class AgentController : ControllerBase
     {
@@ -21,6 +21,17 @@ namespace ValorantHubAPI.API.Controllers
         {
             var agents = _agentService.GetAgents();
             return Ok(agents);
+        }
+
+        [HttpGet("details/{id}")]
+        public IActionResult GetAgentDetails(int id)  
+        {
+            var agent = _agentService.GetAgentById(id);  
+            if (agent == null)
+            {
+                return NotFound();
+            }
+            return Ok(agent);
         }
 
         [HttpPost]

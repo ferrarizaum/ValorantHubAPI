@@ -7,6 +7,7 @@ namespace ValorantHubAPI.API.Services
     public interface IWeaponService
     {
         ICollection<WeaponEntity> GetWeapons();
+        WeaponEntity GetWeaponById(int id);
         WeaponEntity PostWeapon(WeaponEntity weapon);
         WeaponEntity UpdateWeapon(WeaponEntity weapon, string displayName);
         WeaponEntity RemoveWeapon(string displayName);
@@ -26,6 +27,12 @@ namespace ValorantHubAPI.API.Services
         {
             var weapons = _dbContext.Weapons.ToList();
             return weapons;
+        }
+
+        public WeaponEntity GetWeaponById(int id)
+        {
+            var weapon = _dbContext.Weapons.FirstOrDefault(x => x.Id == id);
+            return weapon;
         }
 
         public WeaponEntity PostWeapon(WeaponEntity weapon)
@@ -65,5 +72,6 @@ namespace ValorantHubAPI.API.Services
 
             return removedWeapon;
         }
+
     }
 }

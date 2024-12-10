@@ -6,7 +6,7 @@ using ValorantHubAPI.Data.Entities;
 namespace ValorantHubAPI.API.Controllers
 {
     [Authorize]
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     [ApiController]
     public class WeaponController : ControllerBase
     {
@@ -22,6 +22,17 @@ namespace ValorantHubAPI.API.Controllers
         {
             var weapons = _weaponService.GetWeapons(); 
             return Ok(weapons);
+        }
+
+        [HttpGet("details/{id}")]
+        public IActionResult GetWeaponDetails(int id)
+        {
+            var weapon = _weaponService.GetWeaponById(id);
+            if (weapon == null)
+            {
+                return NotFound();
+            }
+            return Ok(weapon);
         }
 
         [HttpPost]

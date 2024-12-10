@@ -7,6 +7,7 @@ namespace ValorantHubAPI.API.Services
     public interface IAgentService
     {
        ICollection<AgentEntity> GetAgents();
+       AgentEntity GetAgentById(int id);
        AgentEntity PostAgent(AgentEntity agent);
        AgentEntity UpdateAgent(AgentEntity agent, string displayName);
        AgentEntity RemoveAgent(string displayName);
@@ -26,6 +27,11 @@ namespace ValorantHubAPI.API.Services
         {
             var agents = _dbContext.Agents.ToList();
             return agents;
+        }
+        public AgentEntity GetAgentById(int id)
+        {
+            var agent = _dbContext.Agents.FirstOrDefault(x => x.Id == id);
+            return agent;
         }
 
         public AgentEntity PostAgent(AgentEntity agent)
@@ -64,5 +70,6 @@ namespace ValorantHubAPI.API.Services
 
             return removedAgent;
         }
+
     }
 }

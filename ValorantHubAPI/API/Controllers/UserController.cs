@@ -23,6 +23,7 @@ namespace ValorantHubAPI.API.Controllers
             return Ok(users);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public IActionResult Post([FromBody] UserEntity user)
         {
