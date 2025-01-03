@@ -10,5 +10,7 @@ namespace ValorantHubAPI.Data.Entities
         public string userName{ get; set; } = string.Empty;
         [Required]
         public string password { get; set; } = string.Empty;
+        [Required]
+        public bool isAdmin { get; set; } = false;
     }
 }
