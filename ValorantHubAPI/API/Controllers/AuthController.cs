@@ -23,7 +23,6 @@ namespace ValorantHubAPI.API.Controllers
             if(token == null)
             {
                 return NotFound();
-                //return BadRequest();
             }
             
             return Ok(token);
