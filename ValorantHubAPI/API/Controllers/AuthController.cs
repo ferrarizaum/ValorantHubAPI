@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using ValorantHubAPI.API.Services;
 using ValorantHubAPI.Data.Entities;
 
@@ -21,7 +22,8 @@ namespace ValorantHubAPI.API.Controllers
 
             if(token == null)
             {
-                return BadRequest();
+                return NotFound();
+                //return BadRequest();
             }
             
             return Ok(token);
